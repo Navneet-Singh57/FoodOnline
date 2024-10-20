@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from vendor.models import Vendor
 
 
 
@@ -49,7 +50,7 @@ def registerUser(request):
             # Send verification email
             
             mail_subject = "Please activate your account"
-            email_template = 'accounts/email/account_verification_email.html'
+            email_template = 'accounts/emails/account_verification_email.html'
             send_verification_email(request,user, mail_subject, email_template)
             
             messages.success(request,"Your account has been registered successfully")
@@ -89,7 +90,7 @@ def registerVendor(request):
             # Send verification email
             
             mail_subject = "Please activate your account"
-            email_template = 'accounts/email/account_verification_email.html'
+            email_template = 'accounts/emails/account_verification_email.html'
             send_verification_email(request,user, mail_subject, email_template)
             
             messages.success(request,"Your account has been registered successfully! Please wait for the approval.")
