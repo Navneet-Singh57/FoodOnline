@@ -12,6 +12,7 @@ from django.template.defaultfilters import slugify
 from accounts.context_processors import get_vendor
 from django.db import IntegrityError
 from django.http import JsonResponse
+from orders.models import Order,OrderedFood
 
 # Create your views here.
 
@@ -215,3 +216,33 @@ def remove_opening_hours(request, pk=None):
             hour = get_object_or_404(OpeningHour,pk=pk)
             hour.delete()
             return JsonResponse({'status': 'success', 'id': pk})
+        
+def order_detail(request,order_number):
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_food = OrderedFood.objects.filter(order=order, fooditem__vendor=get_vendor(request))
+        subtotal = 0
+        context = {
+                'order': order,
+                'ordered_food':ordered_food,
+                'subtotal':order.get_total_by_vendor()['subtotal'],
+                'tax_data': order.get_total_by_vendor()['tax_dict'],
+                'grand_total': order.get_total_by_vendor()['grand_total']
+               
+            }
+        return render(request,'vendor/order_detail.html',context)
+    except:
+        return redirect('vendor')
+    
+    
+def my_orders(request):
+    vendor = Vendor.objects.get(user=request.user)
+    orders = Order.objects.filter(vendors__in=[vendor.id],is_ordered=True).order_by('-created_at')
+    
+    context ={
+        'orders':orders,
+        'orders_count': orders.count(),
+        
+    }
+    return render(request,'vendor/my_orders.html',context)
+    
