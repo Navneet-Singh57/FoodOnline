@@ -174,14 +174,18 @@
             $('#payment-method-error').html("Select Payment Method!");
             return false;
         }else{
-            var conf = confirm('You have selected '+payMethod+' as your preferred payment method.\nClick "OK" to continue.')
+            if(payMethod == 'RazorPay'){
+                $('#payment-method-error').html("RazorPay is not working at the moment. Please use PayPal");
+            return false;
+            }else{
+                var conf = confirm('You have selected '+payMethod+' as your preferred payment method.\nClick "OK" to continue.')
             if(conf == true){
                 return true;
             }else{
                 return false;
             }
-        }
-        
+            }
+        }  
     }
 
     $('input[name=payment_method]').on('change', function(){
