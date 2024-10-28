@@ -107,8 +107,8 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         if self.latitude and self.longitude:
             self.location = Point(float(self.longitude), float(self.latitude))
-            return super(UserProfile, self).save(*args, *kwargs)
-        return super(UserProfile, self).save(*args, *kwargs)
+            return super(UserProfile, self).save(*args, **kwargs)
+        return super(UserProfile, self).save(*args, **kwargs)
     
     # def full_address(self):
     #     return f'{self.address_line_1},{self.address_line_2}'
