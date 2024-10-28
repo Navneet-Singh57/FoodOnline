@@ -178,10 +178,11 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
 
-os.environ['PATH'] = os.path.join(BASE_DIR, 'venvLibsite-packagesosgeo') + ';' + os.environ['PATH']
-os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, 'venvLibsite-packagesosgeodataproj') + ';' + os.environ['PATH']
-GDAL_LIBRARY_PATH = '/opt/homebrew/lib/libgdal.dylib'
-GEOS_LIBRARY_PATH = '/opt/homebrew/lib/libgeos_c.dylib'
+if DEBUG == True:
+    os.environ['PATH'] = os.path.join(BASE_DIR, 'venvLibsite-packagesosgeo') + ';' + os.environ['PATH']
+    os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, 'venvLibsite-packagesosgeodataproj') + ';' + os.environ['PATH']
+    GDAL_LIBRARY_PATH = '/opt/homebrew/lib/libgdal.dylib'
+    GEOS_LIBRARY_PATH = '/opt/homebrew/lib/libgeos_c.dylib'
 
 
 PAYPAL_CLIENT_ID=config('PAYPAL_CLIENT_ID')
